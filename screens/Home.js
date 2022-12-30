@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 
 const Home = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
+    
     return (
-        <View style={{backgroundColor: '#111111'}}>
+        <View style={{backgroundColor: '#111111',flex:1,marginTop:'13%'}}>
             <View style={{marginLeft:20,flexDirection:'row'}}>
                <View>
                     <Text style={{fontSize:35,fontWeight:'bold',color:'white'}}>Good Afternoon</Text>

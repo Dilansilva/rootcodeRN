@@ -1,42 +1,67 @@
-import { Image, StyleSheet,TextInput ,Text, View,TouchableOpacity } from 'react-native';
+import { Image, StyleSheet,TextInput ,Text, View,TouchableOpacity ,AsyncStorage} from 'react-native';
 import { SocialIcon } from '@rneui/themed';
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 
 const LoginPage = ({navigation}) => {
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState();
     const [errorMsg,setErrorMsg] = useState();
+    const [errPass,setErrPass] = useState();
+    const [isLogging,setIsLogging] = useState(true);
 
     /*Toggle password input */
     const [toggle,setToggle] = useState(true);
     
-    let emailRegex = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"; 
+    let emailRegex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+    let passwordRegex = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
 
     const submitCredentials = () => {
-        navigation.navigate('HomeScreen')
-        fetch('https://stage-api.serw.io/v1/auth/local/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        console.log(password,email);
+        var raw = JSON.stringify({
+            email: email,
+            password: password
         });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        fetch("https://stage-api.serw.io/v1/auth/local/login", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+                let authorized = true;
+              if(JSON.parse(result).isVerified){
+                  navigation.replace('HomeScreen')
+                    const storeData = async () => {
+                    try {
+                      await AsyncStorage.setItem(
+                        'token',
+                        JSON.parse(result).customerAccessToken
+                      );
+                    } catch (error) {
+                      // Error saving data
+                    }
+                  };
+                  storeData();
+              } else {
+                  authorized = false
+              }
+              setIsLogging(authorized);
+          })
+          .catch(error => console.log('error:::', error));
     }
-    useEffect(() => {
-        let message = "";
-      if(email.match(emailRegex)){
-        message = "Invalid email"
-      }  else {
-          message = ""
-      }
-      setErrorMsg(message);
-       
-    },[email]);
+
+    const emailValidator = () => {
+        let errMsg = "";
+        emailRegex.test(email) ? errMsg = "" : errMsg = "Invalid Email" 
+        setErrorMsg(errMsg);
+    }
     
     return(
         <View style={{flex:1,marginTop:'13%',backgroundColor: '#111111'}}>
@@ -54,11 +79,12 @@ const LoginPage = ({navigation}) => {
                             placeholder="kate@gmail.com"
                             placeholderTextColor="#FFFFFF" 
                             onChangeText={setEmail}
+                            onBlur={emailValidator}
                         />
                     </View>
                     <Text style={{color:'red',marginLeft:43}}>{errorMsg}</Text>
             </View>
-
+            <Text style={styles.textStyles}>Password</Text>
                 <View style={{flexDirection:'row'}}>
                         {/* <Text style={styles.textStyles}>Password</Text> */}
                         {/* <View style={styles.inputContainer}> */}
@@ -77,6 +103,7 @@ const LoginPage = ({navigation}) => {
                                 placeholderTextColor="#FFF" 
                                 onChangeText={setPassword}
                                 secureTextEntry={toggle}
+                               // onBlur={passwordValidator}
                             />
                         {/* </View> */}
                         <TouchableOpacity style={{marginTop:20,marginLeft:-60}}
@@ -94,6 +121,7 @@ const LoginPage = ({navigation}) => {
                             <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
+                    <Text style={{color:'red',marginLeft:43,textAlign:'center',marginTop:20}}>{!isLogging ? "Invalid Logging" : null}</Text>
            </View>
           
            <View style={styles.marginTopStyle}>
