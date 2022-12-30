@@ -7,6 +7,9 @@ const LoginPage = ({navigation}) => {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState();
     const [errorMsg,setErrorMsg] = useState();
+
+    /*Toggle password input */
+    const [toggle,setToggle] = useState(true);
     
     let emailRegex = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"; 
 
@@ -36,7 +39,7 @@ const LoginPage = ({navigation}) => {
     },[email]);
     
     return(
-        <View style={{flex:1,backgroundColor: '#111111'}}>
+        <View style={{flex:1,marginTop:'13%',backgroundColor: '#111111'}}>
            <View style={styles.container}>
             <Image
                 style={styles.image}
@@ -56,16 +59,31 @@ const LoginPage = ({navigation}) => {
                     <Text style={{color:'red',marginLeft:43}}>{errorMsg}</Text>
             </View>
 
-                <View>
-                        <Text style={styles.textStyles}>Password</Text>
-                        <View style={styles.inputContainer}>
+                <View style={{flexDirection:'row'}}>
+                        {/* <Text style={styles.textStyles}>Password</Text> */}
+                        {/* <View style={styles.inputContainer}> */}
                             <TextInput
-                                style={styles.input}
-                                placeholder=""
+                                style={{
+                                    height: 40,
+                                    margin: 12,
+                                    width: '80%',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    color: '#9CA3AF',
+                                    backgroundColor: '#3A3C3F',
+                                    marginLeft: 40
+                                }}
+                                placeholder="........."
                                 placeholderTextColor="#FFF" 
                                 onChangeText={setPassword}
+                                secureTextEntry={toggle}
                             />
-                        </View>
+                        {/* </View> */}
+                        <TouchableOpacity style={{marginTop:20,marginLeft:-60}}
+                        onPress={() => setToggle(!toggle)}>
+                            <Text style={{color:'#fbbc05'}}>{toggle ? 'Show' : 'Hide'}</Text>
+                        </TouchableOpacity>
+                        
                        
                 </View>
 
@@ -136,7 +154,7 @@ const styles =StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         color: '#9CA3AF',
-        backgroundColor: '#3A3C3F'
+        backgroundColor: '#3A3C3F',
       },
     inputContainer : {
         justifyContent: 'center',
@@ -165,10 +183,14 @@ const styles =StyleSheet.create({
     button: {
         backgroundColor: "#fbbc05",
         padding: 13,
-        borderRadius: 22
+        borderRadius: 22,
+        textAlign:'center'
     },
     buttonText: {
         color: "white",
+        textAlign:'center',
+        fontSize: 15,
+        fontWeight: 'bold'
     },
     marginTopStyle: {
         marginTop: 25,

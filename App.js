@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 
 function HomeScreen() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="Home" component={Home}/>
       <Tab.Screen name="Explore" component={Explore}/>
       <Tab.Screen name="Library" component={Library}/>
@@ -29,7 +29,7 @@ function HomeScreen() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
         <Stack.Screen name="Login" component={LoginPage}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
       </Stack.Navigator>

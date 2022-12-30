@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const Home = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View style={{flex:1,backgroundColor: '#111111'}}>
+        <View style={{backgroundColor: '#111111'}}>
             <View style={{marginLeft:20,flexDirection:'row'}}>
                <View>
                     <Text style={{fontSize:35,fontWeight:'bold',color:'white'}}>Good Afternoon</Text>
@@ -20,11 +20,15 @@ const Home = ({navigation}) => {
                     />
                </View>
                <View>
-                    <Image
-                        source={require('../assets/practical_test_logo.png')}
-                    />
+                
                </View>
             </View>
+            <View style={{ justifyContent: "center",alignItems: "center",}}> 
+                        <Image
+                            source={require('../assets/practical_test_logo.png')}
+                            style={{width:200,height:200}}
+                        />
+                   </View>
 
 
             <View style={styles.centeredView}>
@@ -38,17 +42,17 @@ const Home = ({navigation}) => {
                     }}
                 >
                     <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Logging Out</Text>
-                        <Text style={{marginBottom:10}}>Are you sure want to log out?</Text>
-                        <Pressable
-                        style={[styles.button, styles.buttonClose]}
-                        onPress={() => navigation.navigate('Login')}
-                        >
-                        <Text style={styles.textStyle}>Log Out</Text>
-                        </Pressable>
-                        
-                    </View>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Logging Out</Text>
+                                <Text style={{marginBottom:10}}>Are you sure want to log out?</Text>
+                                    <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() => navigation.navigate('Login')}
+                                    >
+                                    <Text style={styles.textStyle}>Log Out</Text>
+                                    </Pressable>
+                            
+                        </View>
                     </View>
                 </Modal>
             </View>
@@ -58,7 +62,6 @@ const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
     centeredView: {
-      flex: 1,
       justifyContent: "center",
       alignItems: "center",
       marginTop: 22
