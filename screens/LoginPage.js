@@ -1,7 +1,39 @@
 import { Image, StyleSheet,TextInput ,Text, View,TouchableOpacity } from 'react-native';
-import { SocialIcon, SocialIconProps } from '@rneui/themed';
+import { SocialIcon } from '@rneui/themed';
+import { useEffect, useState } from 'react';
 
 const LoginPage = () => {
+
+    const [email,setEmail] = useState();
+    const [password,setPassword] = useState();
+    const [errorMsg,setErrorMsg] = useState();
+    
+    let emailRegex = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"; 
+
+    const submitCredentials = () => {
+        fetch('https://stage-api.serw.io/v1/auth/local/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        });
+    }
+    useEffect(() => {
+        let message = "";
+      if(email.match(emailRegex)){
+        message = "Invalid email"
+      }  else {
+          message = ""
+      }
+      setErrorMsg(message);
+       
+    },[email]);
+    
     return(
         <View>
            <View style={styles.container}>
@@ -15,10 +47,12 @@ const LoginPage = () => {
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                            value={"kate@gmail.com"}
+                            placeholder="kate@gmail.com"
                             placeholderTextColor="#FFFFFF" 
+                            onChangeText={setEmail}
                         />
                     </View>
+                    <Text style={{color:'red',marginLeft:43}}>{errorMsg}</Text>
             </View>
 
                 <View>
@@ -26,16 +60,18 @@ const LoginPage = () => {
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.input}
-                                value={"kate@gmail.com"}
+                                placeholder=""
                                 placeholderTextColor="#FFF" 
+                                onChangeText={setPassword}
                             />
                         </View>
+                       
                 </View>
 
            <View>
                 <Text style={styles.whiteText} >Forget your Password?</Text>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={submitCredentials}>
                             <Text style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
