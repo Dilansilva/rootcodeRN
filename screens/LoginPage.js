@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const LoginPage = () => {
 
-    const [email,setEmail] = useState();
+    const [email,setEmail] = useState("");
     const [password,setPassword] = useState();
     const [errorMsg,setErrorMsg] = useState();
     
@@ -35,7 +35,7 @@ const LoginPage = () => {
     },[email]);
     
     return(
-        <View>
+        <View style={{flex:1,backgroundColor: '#111111'}}>
            <View style={styles.container}>
             <Image
                 style={styles.image}
