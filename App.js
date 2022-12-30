@@ -9,38 +9,31 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 //Screens
 import LoginPage from './screens/LoginPage';
+import Home from './screens/Home'
+import Explore from './screens/Explore';
+import Library from './screens/Library';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function Home() {
+function HomeScreen() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" />
+      <Tab.Screen name="Home" component={Home}/>
+      <Tab.Screen name="Explore" component={Explore}/>
+      <Tab.Screen name="Library" component={Library}/>
     </Tab.Navigator>
   );
 }
 
 export default function App() {
   return (
-    // <Stack.Navigator>
-    //   <Stack.Screen name="Login" component={LoginPage} />
-    //   <NavigationContainer>
-    //     <Tab.Navigator>
-    //       <Tab.Screen name="Login" component={LoginPage} />
-    //       <Tab.Screen name="Home" component={LoginPage} />
-    //       <Tab.Screen name="Home" component={LoginPage} />
-    //     </Tab.Navigator>
-    //   </NavigationContainer>
-    // </Stack.Navigator>
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginPage}/>
-
+        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
-      
-   
   );
 }
 

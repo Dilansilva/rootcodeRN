@@ -2,7 +2,7 @@ import { Image, StyleSheet,TextInput ,Text, View,TouchableOpacity } from 'react-
 import { SocialIcon } from '@rneui/themed';
 import { useEffect, useState } from 'react';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState();
@@ -11,6 +11,7 @@ const LoginPage = () => {
     let emailRegex = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"; 
 
     const submitCredentials = () => {
+        navigation.navigate('HomeScreen')
         fetch('https://stage-api.serw.io/v1/auth/local/login', {
             method: 'POST',
             headers: {
