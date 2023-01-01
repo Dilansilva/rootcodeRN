@@ -42,6 +42,7 @@ const Home = ({navigation}) => {
                     setModalVisible(!modalVisible);
                     }}
                 >
+                  
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={styles.modalText}>Logging Out</Text>
@@ -52,7 +53,6 @@ const Home = ({navigation}) => {
                                     >
                                     <Text style={styles.textStyle}>Log Out</Text>
                                     </Pressable>
-                            
                         </View>
                     </View>
                 </Modal>

@@ -13,6 +13,7 @@ import Home from './screens/Home'
 import Explore from './screens/Explore';
 import Library from './screens/Library';
 import {AsyncStorage} from 'react-native';
+import Details from './screens/Details';
 import { useEffect, useState } from 'react';
 
 const Tab = createBottomTabNavigator();
@@ -55,6 +56,7 @@ export default function App() {
         
           <Stack.Screen name="HomeScreen" component={HomeScreen}/> 
            <Stack.Screen name="Login" component={LoginPage}/>
+           <Stack.Screen name="Details" component={Details}/>
         
           
         
